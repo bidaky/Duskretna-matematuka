@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+int main()
+{
+    setlocale(LC_ALL,"Ukrainian");
+int arr1[50],arr2[50],unions[100],riz[100];
+int n,sizeunions=0,sizeriz=0;
+int p=0;//потужність симетричної різниці
+
+      cout<<"Введiть кiлькiсть елементiв першої множини"<<" " ;
+      cin >>n;
+      cout<<"Введiть"<<" "<< n <<" "<<"елементiв першої множини"<<endl;
+       for(int i=0;i<n;i++){
+             cin>>arr1[i]; // ввід елементів користувачем
+                           }
+for(int i=0; i<n; i++){//перевірка на наявність повторюваних елементів
+        for(int j=i+1; j<n; j++)     {//наступний елемент порівнюється з попереднім
+        if(arr1[i]==arr1[j]){
+        for(int k=j; k<n-1; k++)
+        arr1[k]=arr1[k+1]; //зсув
+        n--;                }
+                                     }
+                      }
+            cout<<endl;
+    cout<<"Ваша перша множина:"<<endl;
+    for(int i=0; i<n; i++){
+    cout<<arr1[i]<<" ";
+              sizeunions++;
+              unions[sizeunions]=arr1[i];
+              sizeriz++;
+              riz[sizeriz]=arr1[i];  }
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+
+    int m;
+    cout<<endl<<"Введiть кiлькiсть елементiв другої множини"<<" " ;
+    cin >>m;
+    cout<<endl<<"Введiть"<<" "<< m <<" "<<"елементи другої множини"<<endl;
+             for(int i=0;i<m;i++){
+             cin>>arr2[i]; // ввід елементів користувачем
+                                 }
+       for(int i=0; i<m; i++){
+       for(int j=i+1; j<m; j++)     {//наступний елемент порівнюється з попереднім
+       if(arr2[i]==arr2[j]){
+       for(int k=j; k<m-1; k++)
+       arr2[k]=arr2[k+1];//зсув
+       m--;
+
+                           }
+                                    }
+                            }
+    cout<<"Ваша друга множина:"<<endl;
+    for(int i=0; i<m; i++){
+    cout<<arr2[i]<<" ";
+              sizeunions++;
+              unions[sizeunions]=arr2[i];
+              sizeriz++;
+              riz[sizeriz]=arr2[i];
+                          }
+  cout<<endl;
+
+//////////////////////////////////////////////////////////////////////////////////////////
+         for(int i=0; i<=sizeunions; i++){//аналогічна перевірка на наянвість повторюваних елементів
+
+             for(int j=i+1; j<=sizeunions; j++)     {
+                if(unions[i]==unions[j]){
+                    for(int k=j; k<=sizeunions-1; k++)
+                        unions[k]=unions[k+1];//зсув
+                        sizeunions--;   }
+                                                     }
+                                         }
+
+cout<<endl<<"Об'єднання"<<" ";
+ for(int i=1; i<=sizeunions; i++){
+    cout<< unions[i]<<" ";
+ }
+ cout<<endl<<"Симетрична рiзниця:"<<" ";
+for (int i=1; i<=sizeriz; i++){//видалення елементів,які повторюються
+        bool flag=true;
+        for (int j=1; j<=sizeriz; j++)
+            if (i!=j && riz[i]==riz[j]) flag=false;
+        if (flag ) {cout<<riz[i]<<" ";
+        p++;//потужність симетричної різниці
+        }
+    }
+cout<<endl<<"Потужнiсть об'єднання"<<" "<<sizeunions<<endl;
+cout<<"Потужнiсть симетричної рiзницi"<<" "<<p;
+
+}
