@@ -1,0 +1,101 @@
+#include <iostream>набуття практичних вмінь та навичок при побудові матриць бінарних відношень та визначені їх типів
+#include <stdlib.h>
+#include <string>
+
+using namespace std;
+void Input(int k, int *K){
+    cout<<"Please,enter your set ,it have "<<k<<" elements"<<endl;
+for (int i=0;i<k;i++){
+    cin>>K[i];
+}}
+int main()
+{
+    int n=0;// перевірка на довжину рядка
+    cout << "Please,enter the size of your sets" << endl;
+    inv: cin>>n;
+    if(n<3){
+        cout<<" Size should be bigger than 2"<<endl;
+        goto inv;
+    }
+    int *M1= new int[n];
+    int *M2= new int [n];
+    Input(n,M1);// заповнення множин елементами
+    Input(n,M2);
+    int **Array = new int*[n];//створення двовимірного масиву
+    for (int i=0;i<n;i++){
+        Array[i]= new int[n];}
+        /////                  Створення матриці                 ////////////
+        for (int i=0; i<n;i++){
+            for( int j=0; j<n;j++){
+                if ( M1[i]>M2[j]){
+                    Array[i][j]=1;
+                }
+                else  {Array[i][j]=0;}
+            }
+        }
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      cout<<"Your matrix:"<<endl;
+      for (int i=0; i<n;i++){
+            for( int j=0; j<n;j++)
+          {
+              cout<< Array[i][j]<<" ";
+          }
+          cout <<endl;
+            }
+    ///////////////////////////рефлексивність////////////////////////////////////////////////////////////
+    int p=0;
+    for (int i=0;i<n;i++){
+        if (Array[i][i]==1){
+            p++;          }
+                         }
+    if (p==n)
+           {cout<<"The matrix is reflective"<<endl;}
+    else if (p==0)
+           { cout<<"The matrix is antireflective"<<endl;}
+    else {cout<<"The matrix is not reflective"<<endl;}
+    //////////////////////симетричність//////////////////////
+    p=0;
+     for (int i=0; i<n;i++){
+            for( int j=0; j<n;j++){
+                    if (Array[i][j]==Array[j][i])
+                    {
+                        p++;
+                    }            }
+                            }
+    if (p == n*n)
+        {cout <<"The matrix is symmetric"<<endl;}
+    else if (p == n)
+      {cout <<"The matrix is antisymmetric"<<endl;}
+    else {cout <<"The matrix is not symmetric"<<endl;}
+    ////////////////Транзитівність//////
+    int trans = 0,numb=0;
+        for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+        if(Array[i][j]==1 && i!=j){
+        int tr = 0;
+        numb++;
+        for(int k=0;k<n;k++){
+            if(Array[j][k]==1 && Array[k][i]==1 && i!=j && j!=k && k!=i){tr = 1;break;}
+        }
+
+        if(tr==1) trans++;
+        }}}
+        if(trans== numb && trans!=0)cout<<endl<<"Matrix is transitive"<<endl;
+    else if(trans=0)cout<<"Matrix is antitransative"<<endl;
+    else cout<<endl<<"Matrix is not transitive"<<endl;
+    p=0;
+     for (int i=0; i<n;i++){
+            for( int j=0; j<n;j++){
+                    if(Array[i][j]==1){
+                        p++;
+                    }             }
+                           }
+    ////////////////////Повнота///////////////////////
+
+        if(p==0){cout<<"The matrix is empty"<<endl;}
+        if(p==n*n){cout<<"The matrix is full"<<endl;}
+       // else{cout<<" ";}
+    delete []M1;
+    delete []M2;
+    return 0;
+}
