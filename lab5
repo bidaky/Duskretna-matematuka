@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+int n,i, j,dist[40],pred[40],c[40][40];
+bool visited[40];
+int minDistance()
+{
+    int minimum = 1000, minD;
+    for (int v = 0; v < n; v++)
+        if (visited[v]==false && dist[v] <= minimum)
+        {
+            minimum = dist[v];
+            minD = v;
+        }
+    return minD;
+}
+void printPath(int j)
+{
+    if (pred[j] == -1)
+        return;
+    printPath(pred[j]);
+    cout << "V" << j+1 << " ";
+}
+void dijkstra(int c[40][40])
+{
+    int point;
+    cout << "Enter start point : ";
+    cin >> point;
+    for (int i = 0; i < n; i++)
+    {
+        pred[0] = -1;
+        dist[i] = 1000;
+        visited[i] = false;
+    }
+    dist[point-1] = 0;
+    for (int i = 0; i < n - 1; i++)
+    {
+        int u = minDistance();
+        visited[u] = true;
+        for (int v = 0; v < n; v++)
+            if (visited[v]==false && c[u][v] && dist[u] + c[u][v] < dist[v])
+            {
+                pred[v] = u;
+                dist[v] = dist[u] + c[u][v];
+            }
+    }
+    cout << "The least way is: ";
+    cout << dist[29] << endl;
+    cout << "The way is: ";
+    cout << "V1 ";
+    printPath(29);
+    cout << endl;
+}
+int main()
+{
+
+    int g1, g2;
+    cout << "Enter the number of vertices: ";
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+
+        for (int j = 0; j < n; j++)
+        {
+            c[i][j] = 0;
+        }
+    }
+    cout<<" Enter number of columns ";
+    cin >> g1;
+    cout<<" Enter number of rows ";
+    cin >> g2;
+
+    for (i = 0; i < n; i++) {
+        for (j = i + 1; j < n; j++)
+        {
+            if (j == i + 1 || j == i + g1) {
+                cout << "From " << i+1 << " to  " << j+1 << ": ";
+                cin >> c[i][j];
+            }
+            else {
+                c[i][j] = 0;
+            }
+        }
+    }
+    dijkstra(c);
+    return 0;
+}
